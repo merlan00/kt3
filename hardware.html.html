@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выпадающее меню</title>
+    <style>
+        .menu, .submenu {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .submenu {
+            display: none;
+        }
+        .has-submenu > a {
+            cursor: pointer;
+        }
+        .has-submenu > a::after {
+            content: " ▼";
+        }
+        .has-submenu.open > a::after {
+            content: " ▲";
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li class="has-submenu">
+            <a>Книги</a>
+            <ul class="submenu">
+                <li class="has-submenu">
+                    <a>Отечественные</a>
+                    <ul class="submenu">
+                        <li><a href="#">Детективы</a></li>
+                        <li><a href="#">Научная фантастика</a></li>
+                        <li><a href="#">Исторические</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a>Зарубежные</a>
+                    <ul class="submenu">
+                        <li><a href="#">Детективы</a></li>
+                        <li><a href="#">Научная фантастика</a></li>
+                        <li><a href="#">Исторические</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a>DVD</a>
+            <ul class="submenu">
+                <li class="has-submenu">
+                    <a>Отечественные</a>
+                    <ul class="submenu">
+                        <li><a href="#">Детективы</a></li>
+                        <li><a href="#">Научная фантастика</a></li>
+                        <li><a href="#">Исторические</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a>Зарубежные</a>
+                    <ul class="submenu">
+                        <li><a href="#">Детективы</a></li>
+                        <li><a href="#">Научная фантастика</a></li>
+                        <li><a href="#">Исторические</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        document.querySelectorAll('.has-submenu > a').forEach(item => {
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                const parentLi = item.parentElement;
+                const submenu = parentLi.querySelector('.submenu');
+
+                if (submenu) {
+                    // Использование toggle для класса
+                    parentLi.classList.toggle('open');
+
+                    // Использование contains для проверки наличия класса
+                    if (parentLi.classList.contains('open')) {
+                        submenu.style.display = 'block';
+                        // Использование setAttribute для установки атрибута
+                        submenu.setAttribute('data-state', 'open');
+                    } else {
+                        submenu.style.display = 'none';
+                        // Использование removeAttribute для удаления атрибута
+                        submenu.removeAttribute('data-state');
+                    }
+
+                    // Пример использования getAttribute
+                    const state = submenu.getAttribute('data-state');
+                    console.log('Состояние подменю:', state);
+
+                    // Пример использования className
+                    console.log('Классы родительского элемента:', parentLi.className);
+
+                    // Пример использования add и remove для классов
+                    if (!parentLi.classList.contains('highlight')) {
+                        parentLi.classList.add('highlight');
+                    } else {
+                        parentLi.classList.remove('highlight');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
